@@ -795,7 +795,7 @@ function showLogin(step){L.step=step||(AUTH_MODE==='phone'?'phone':'email');L.er
 function drawLogin(){
   var l=$('#layer'),h,label,focusId;
   if(L.step==='email'){focusId='lEmail';label=L.signup?'Criar conta':'Entrar';
-    h='<h2>'+(L.signup?'Criar conta na SpotBiz':'Entrar na SpotBiz')+'</h2><p class="muted">'+(L.signup?'Usa um email que consultes. A palavra-passe tem pelo menos 6 caracteres.':'Entra com o teu email e a tua palavra-passe.')+'</p><div class="fld"><label for="lEmail">Email</label><input class="in" id="lEmail" type="email" autocomplete="email" value="'+esc(L.email)+'"></div><div class="fld"><label for="lPass">Palavra-passe</label><input class="in" id="lPass" type="password" autocomplete="'+(L.signup?'new-password':'current-password')+'"></div><p style="font-size:14px"><button type="button" class="linkbtn" data-act="swapmode">'+(L.signup?'Já tenho conta. Entrar':'Ainda não tenho conta. Criar conta')+'</button>'+(L.signup?'':' · <button type="button" class="linkbtn" data-act="resetpw">Esqueci a palavra-passe</button>')+'</p>';
+    h='<h2>'+(L.signup?'Criar conta na SpotBiz':'Entrar na SpotBiz')+'</h2><div class="seg" role="group" aria-label="Tipo de acesso" style="margin-bottom:14px;width:100%"><button type="button" data-act="authtab" data-v="in" aria-pressed="'+(!L.signup)+'" style="flex:1;padding:10px">Já tenho conta</button><button type="button" data-act="authtab" data-v="up" aria-pressed="'+L.signup+'" style="flex:1;padding:10px">Criar conta</button></div><p class="muted">'+(L.signup?'Usa um email que consultes. A palavra-passe tem pelo menos 6 caracteres.':'Entra com o teu email e a tua palavra-passe.')+'</p><div class="fld"><label for="lEmail">Email</label><input class="in" id="lEmail" type="email" autocomplete="email" value="'+esc(L.email)+'"></div><div class="fld"><label for="lPass">Palavra-passe</label><input class="in" id="lPass" type="password" autocomplete="'+(L.signup?'new-password':'current-password')+'"></div>'+(L.signup?'':'<p style="font-size:14px"><button type="button" class="linkbtn" data-act="resetpw">Esqueci a palavra-passe</button></p>');
   }else if(L.step==='phone'){focusId='lPhone';label='Receber código';
     h='<h2>Entrar na SpotBiz</h2><p class="muted">Enviamos um código por SMS para confirmar o teu número. Não precisas de palavra-passe.</p><div class="fld"><label for="lPhone">O teu número de telemóvel</label><input class="in" id="lPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="84 123 4567" value="'+esc(L.phoneRaw)+'"></div>';
   }else if(L.step==='code'){focusId='lCode';label='Confirmar';
@@ -908,6 +908,7 @@ document.addEventListener('click',function(e){
   else if(a==='closeLayer')closeLayer();
   else if(a==='account')showAccount();
   else if(a==='logout')doLogout();
+  else if(a==='authtab'){var ei2=$('#lEmail');if(ei2)L.email=ei2.value;L.signup=el.dataset.v==='up';L.err='';L.info='';drawLogin()}
   else if(a==='swapmode'){var ei=$('#lEmail');if(ei)L.email=ei.value;L.signup=!L.signup;L.err='';L.info='';drawLogin()}
   else if(a==='resetpw')resetPw();
   else if(a==='delbiz')askDelete(id);
